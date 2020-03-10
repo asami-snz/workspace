@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+
+</head>
+<body>
+	<div th:fragment="regist_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベントを作成します</font>
+			<br>
+			
+			<!-- 戻るボタン -->
+			<a th:href="@{'/eventTop'}">TOPへ</a>
+		</div>
+	</div>
+	
+	<div th:fragment="regist_comp_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベントを作成完了しました</font>
+			<br>
+			
+			<!-- 戻るボタン -->
+			<a th:href="@{'/eventTop'}">TOPへ</a>
+		</div>
+	</div>
+	
+</body>
+</html>

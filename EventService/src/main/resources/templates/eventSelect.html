@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body>
+	<!-- イベント一覧 -->
+	<div th:fragment="select_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベントを選択してください</font>
+			<br>
+		</div>
+
+		<!-- イベント件数 -->
+		<label th:text="'イベント件数:'+${eventListCount}+'件'"></label><br>
+			
+		<table class="table table-bordered table-hover table-striped">
+		<tr>
+			<th class="info col-sm-1">No.</th>
+			<th class="info col-sm-2">イベント名</th>
+			<th class="info col-sm-2">開催日時</th>
+			<th class="info col-sm-2"></th>
+		</tr>
+		<tr th:each="event:${eventList}">
+			<td th:text="${event.eventID}"></td>
+			<td th:text="${event.eventName}"></td>
+			<td th:text="${#dates.format(event.eventDay, 'YYYY/MM/dd')}"></td>
+			<td>
+				<a class="btn btn-primary" th:href="@{'/eventSelect/'+${event.eventID}}">詳細</a>
+			</td>
+		</tr>
+		</table>
+			
+		<!-- 戻るボタン -->
+		<a th:href="@{'/eventTop'}">TOPへ</a>
+	</div>
+
+
+	<!-- イベント詳細画面 -->
+	<div th:fragment="select_detail_contents">
+		<br>
+		<br>
+		<table class="table table-bordered table-hover table-bordered">
+		<tr>
+			<th class="info col-sm-3">イベント名</th>
+			<td th:text="${event.eventName}"></td>
+		</tr>
+		<tr>
+			<th class="info col-sm-3">開催日時</th>
+			<td th:text="${#dates.format(event.eventDay, 'YYYY/MM/dd')}"></td>
+		</tr>
+		<tr>
+			<th class="info col-sm-3">内容詳細</th>
+			<td th:text="${event.eventDetail}"></td>
+		</tr>
+		<tr>
+			<th class="info col-sm-3">現在の参加者</th>
+			<td>(まだできてないところ)</td>
+		</tr>
+		</table>
+
+		<!-- 参加ボタン -->
+		<button class="btn btn-success btn-lg pull-right"
+				    type="submit" name="join">
+		このイベントに参加する
+		</button>
+		<br>
+		<br>
+		<a th:href="@{'/eventSelect'}">イベント一覧に戻る</a>
+	</div>
+
+
+	<!-- イベント参加完了画面 -->
+	<div th:fragment="select_join_comp_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベント参加完了しました</font>
+			<br>
+			
+			<!-- 戻るボタン -->
+			<a th:href="@{'/eventTop'}">TOPへ</a>
+		</div>
+	</div>
+	
+</body>
+</html>
