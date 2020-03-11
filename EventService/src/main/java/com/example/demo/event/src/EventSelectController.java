@@ -1,4 +1,4 @@
-package com.example.event.src;
+package com.example.demo.event.src;
 
 import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.event.dao.EventService;
+import com.example.demo.event.dao.EventService;
 
 @Controller
 public class EventSelectController {
@@ -40,7 +40,6 @@ public class EventSelectController {
 		return "/eventTopLayout";
 	}
 	
-	
 	// GetRequestでイベント詳細画面をメイン部分に表示する
 	@GetMapping("/eventSelect/{id:.+}")
 	public String getEventSelectDetail(Model model, @PathVariable("id")int eventID) {
@@ -49,7 +48,7 @@ public class EventSelectController {
 
 		// 指定したイベント情報を取得
 		Event event = eventService.selectOne(eventID);
-			
+		
 		// モデルにデータを登録
 		model.addAttribute("event", event);
 		model.addAttribute("contents", "eventSelect::select_detail_contents");

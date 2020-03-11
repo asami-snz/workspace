@@ -1,9 +1,9 @@
-package com.example.event.dao;
+package com.example.demo.event.dao;
 
 import java.util.*;
 import org.springframework.stereotype.Service;
 
-import com.example.event.src.*;
+import com.example.demo.event.src.*;
 
 import org.springframework.beans.factory.annotation.*;
 
@@ -75,5 +75,4 @@ public class EventService {
 		}
 		return result;
 	}
-	
 }

@@ -1,4 +1,4 @@
-package com.example.event.src;
+package com.example.demo.event.src;
 
 import java.util.Date;
 import javax.validation.constraints.*;

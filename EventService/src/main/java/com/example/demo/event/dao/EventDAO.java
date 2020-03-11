@@ -1,13 +1,12 @@
-package com.example.event.dao;
+package com.example.demo.event.dao;
 
 import java.util.*;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.event.src.*;
+import com.example.demo.event.src.*;
 
 @Repository("EventDAO")
 public class EventDAO {

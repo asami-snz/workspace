@@ -1,4 +1,4 @@
-package com.example.event.src;
+package com.example.demo.event.src;
 
 //import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.event.dao.EventService;
+import com.example.demo.event.dao.EventService;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -19,7 +19,7 @@ public class EventRegisterController {
 	 EventService eventService;
 	
 	// GetRequestでイベント作成画面をメイン部分に表示する
-	// @ModelAttributeでEvent型の変数を渡す
+	// @ModelAttributeでEventForm型の変数を渡す
 	@GetMapping("/eventRegister")
 	public String getEventRegister(@ModelAttribute EventForm eventForm, Model model) {
 		model.addAttribute("contents", "eventRegister::regist_contents");
