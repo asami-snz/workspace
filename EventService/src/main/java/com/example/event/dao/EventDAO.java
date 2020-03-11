@@ -1,12 +1,13 @@
-package com.example.demo.com.example.demo.event.dao;
+package com.example.event.dao;
 
 import java.util.*;
-import com.example.demo.com.example.demo.event.src.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.example.event.src.*;
 
 @Repository("EventDAO")
 public class EventDAO {
@@ -25,12 +26,10 @@ public class EventDAO {
 		
 		//1件登録
 		int rowNumber = jdbc.update("INSERT INTO event_tbl("
-				+ " event_id,"
 				+ " event_name,"
 				+ " event_day,"
-				+ " event_detail"
-				+ " VALUES(?,?,?,?)"
-				, event.getEventID()
+				+ " event_detail)"
+				+ " VALUES(?,?,?)"
 				, event.getEventName()
 				, event.getEventDay()
 				, event.getEventDetail());		
@@ -46,7 +45,7 @@ public class EventDAO {
 		Event event = new Event();
 		
 		//取得したデータを結果返却用の変数にセットしていく
-		event.setEventID(eventID);;
+		event.setEventID(eventID);
 		event.setEventName((String)map.get("event_name"));
 		event.setEventDay((Date)map.get("event_day"));
 		event.setEventDetail((String)map.get("event_detail"));

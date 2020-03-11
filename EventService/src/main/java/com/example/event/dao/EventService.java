@@ -1,9 +1,11 @@
-package com.example.demo.com.example.demo.event.dao;
+package com.example.event.dao;
 
 import java.util.*;
 import org.springframework.stereotype.Service;
+
+import com.example.event.src.*;
+
 import org.springframework.beans.factory.annotation.*;
-import com.example.demo.com.example.demo.event.src.*;
 
 /* EventDAOのラッパークラス（service） */
 
