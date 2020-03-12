@@ -44,13 +44,23 @@ public class EventSelectController {
 	@GetMapping("/eventSelect/{id:.+}")
 	public String getEventSelectDetail(Model model, @PathVariable("id")int eventID) {
 		//　ユーザーID確認
-		System.out.println("userID=" + eventID);
-
+		System.out.println("eventID=" + eventID);
+			
 		// 指定したイベント情報を取得
 		Event event = eventService.selectOne(eventID);
 		
+		// 指定したイベントに対応した参加者の取得
+		int i = 0;
+		String name = "";
+		List<String> members = eventService.selectMembers(eventID);
+		for (i = 0; i < members.size(); i++ ) {
+			name += members.get(i);
+			name += "、";
+		}
+		
 		// モデルにデータを登録
 		model.addAttribute("event", event);
+		model.addAttribute("members", name);
 		model.addAttribute("contents", "eventSelect::select_detail_contents");
 		return "/eventTopLayout";
 	}

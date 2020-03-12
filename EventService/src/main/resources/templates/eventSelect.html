@@ -56,9 +56,10 @@
 			<th class="info col-sm-3">内容詳細</th>
 			<td th:text="${event.eventDetail}"></td>
 		</tr>
+		<!-- 本当は「現在の参加者」をrowspanで結合してth:each表示したい -->
 		<tr>
 			<th class="info col-sm-3">現在の参加者</th>
-			<td>(まだできてないところ)</td>
+			<td th:text="${members}"></td>
 		</tr>
 		</table>
 
