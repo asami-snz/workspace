@@ -57,7 +57,7 @@ public class EventDAO {
 		//結果返却用の変数
 		List<Event> eventList = new ArrayList<>();
 			
-		// M_USERテーブルのデータを全件取得
+		// event_tblテーブルのデータを全件取得
 		List<Map<String,Object>> getList = jdbc.queryForList("SELECT * FROM event_tbl");
 			
 		//取得したデータを返却用のListに格納
@@ -95,6 +95,28 @@ public class EventDAO {
 	public int deleteOne(int eventID) throws DataAccessException {
 		int rowNumber = jdbc.update("DELETE FROM event_tbl WHERE event_id = ?", eventID);
 		return rowNumber;
+	}
+	
+	// 指定したイベントIDに紐づいている参加者を取得
+	public List<String> selectMembers(int eventID) throws DataAccessException {
+		// 結果返却用の変数
+		List<String> member_name = new ArrayList<>();
+		
+		// イベントテーブル、参加者テーブルを結合した結果を取得
+		List<Map<String,Object>> getList = jdbc.queryForList(""
+				+ "SELECT m.member_name FROM member_tbl AS m"
+				+ " INNER JOIN event_tbl AS e"
+				+ " ON m.member_event_id=e.event_id"
+				+ " AND e.event_id=?"
+				, eventID );
+		
+		//取得したデータを返却用Listに格納
+		for(Map<String, Object> map:getList) {
+			String str = (String)map.get("member_name");
+			member_name.add(str);
+		}
+		
+		return member_name;
 	}
 	
 }

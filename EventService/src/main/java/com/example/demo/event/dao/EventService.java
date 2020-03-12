@@ -75,4 +75,10 @@ public class EventService {
 		}
 		return result;
 	}
+	
+	// 参加者取得メソッド
+	public List<String> selectMembers(int eventID){
+		return eDao.selectMembers(eventID);
+	}
+	
 }
