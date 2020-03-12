@@ -41,8 +41,11 @@
 
 	<!-- イベント詳細画面 -->
 	<div th:fragment="select_detail_contents">
-		<br>
-		<br>
+		<div class="page-header">
+			<br>
+			<font size=4>イベント詳細</font>
+			<br>
+		</div>
 		<table class="table table-bordered table-hover table-bordered">
 		<tr>
 			<th class="info col-sm-3">イベント名</th>
@@ -64,13 +67,39 @@
 		</table>
 
 		<!-- 参加ボタン -->
-		<button class="btn btn-success btn-lg pull-right"
-				    type="submit" name="join">
-		このイベントに参加する
-		</button>
-		<br>
+		<a class="btn btn-info pull-right" th:href="@{'/eventJoin'}">
+			このイベントに参加する
+		</a>
 		<br>
 		<a th:href="@{'/eventSelect'}">イベント一覧に戻る</a>
+	</div>
+
+	<!-- イベント参加受付画面 -->
+	<div th:fragment="select_join_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベント参加者の名前を入力してください</font>
+		</div>
+		<form method="post" action="/eventJoin" th:object="${memberForm}">
+			<div class="form-group col-sm-8"
+				th:classappend="${#fields.hasErrors('memberName')}?'has-error'">
+				<input type="text" class="form-control"
+					placeholder="(30文字以内)" th:field="*{memberName}" />
+				
+				<!-- 入力エラー時のcss -->
+				<span class="text-danger"
+					th:if="${#fields.hasErrors('memberName')}"
+					th:errors="*{memberName}">
+				</span>
+				<br>
+				<!-- イベント登録ボタン -->
+				<button class="btn btn-primary pull-right" type="submit">
+					参加
+				</button>
+				<!-- 戻るボタン -->
+				<a th:href="@{'/eventTop'}">TOPへ</a>
+			</div>
+		</form>
 	</div>
 
 

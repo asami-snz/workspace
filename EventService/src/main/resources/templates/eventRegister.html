@@ -15,67 +15,65 @@
 	<div th:fragment="regist_contents">
 		<div class="page-header">
 			<br>
-			<font size=4>イベントを作成します</font>
-			<br>
-			<form method="post" action="/eventRegister" th:object="${eventForm}">
-				<table class="table table-bordered table-hover">
-				<tr>
-					<th class="active">イベント名</th>
-					<td>
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('eventName')}?'has-error'">
-							<input type="text" class="form-control"
-								placeholder="(30文字以内)" th:field="*{eventName}" />
-							<!-- エラー用CSS -->
-							<span class="text-danger"
-								th:if="${#fields.hasErrors('eventName')}"
-								th:errors="*{eventName}">
-							eventName error
-							</span>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th class="active">開催日</th>
-					<td>
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('eventDay')}?'has-error'">
-							<input type="text" class="form-control"
-								placeholder="yyyy/MM/dd" th:field="*{eventDay}" />
-							<!-- エラー用CSS -->
-							<span class="text-danger"
-								th:if="${#fields.hasErrors('eventDay')}"
-								th:errors="*{eventDay}">
-							eventDay error
-							</span>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th class="active">イベント詳細</th>
-					<td>
-						<div class="form-group"
-							th:classappend="${#fields.hasErrors('eventDetail')}?'has-error'">
-							<input type="text" class="form-control" 
-								placeholder="(50文字以内)" th:field="*{eventDetail}" />
-							<!-- エラー用CSS -->
-							<span class="text-danger"
-								th:if="${#fields.hasErrors('eventDetail')}"
-								th:errors="*{eventDetail}">
-							eventDetail error
-							</span>
-						</div>
-					</td>
-				</tr>
-				</table>
-			
+			<font size=4>イベント参加者の名前を入力してください</font>
+		</div>
+		<form method="post" action="/eventRegister" th:object="${eventForm}">
+			<table class="table table-bordered table-hover">
+			<tr>
+				<th class="active">イベント名</th>
+				<td>
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('eventName')}?'has-error'">
+						<input type="text" class="form-control"
+							placeholder="(30文字以内)" th:field="*{eventName}" />
+						<!-- エラー用CSS -->
+						<span class="text-danger"
+							th:if="${#fields.hasErrors('eventName')}"
+							th:errors="*{eventName}">
+						eventName error
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th class="active">開催日</th>
+				<td>
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('eventDay')}?'has-error'">
+						<input type="text" class="form-control"
+							placeholder="yyyy/MM/dd" th:field="*{eventDay}" />
+						<!-- エラー用CSS -->
+						<span class="text-danger"
+							th:if="${#fields.hasErrors('eventDay')}"
+							th:errors="*{eventDay}">
+						eventDay error
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th class="active">イベント詳細</th>
+				<td>
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('eventDetail')}?'has-error'">
+						<input type="text" class="form-control" 
+							placeholder="(50文字以内)" th:field="*{eventDetail}" />
+						<!-- エラー用CSS -->
+						<span class="text-danger"
+							th:if="${#fields.hasErrors('eventDetail')}"
+							th:errors="*{eventDetail}">
+						eventDetail error
+						</span>
+					</div>
+				</td>
+			</tr>
+			</table>
 			
 			<!-- イベント登録ボタン -->
 			<button class="btn btn-primary" type="submit">
 				登録
 			</button>
 		</form>
-		</div>
 	</div>
 	
 	<div th:fragment="regist_comp_contents">
@@ -83,10 +81,9 @@
 			<br>
 			<label th:text="''+${strResult}+''"></label><br>
 			<br>
-			
-			<!-- 戻るボタン -->
-			<a th:href="@{'/eventTop'}">TOPへ</a>
 		</div>
+		<!-- 戻るボタン -->
+		<a th:href="@{'/eventTop'}">TOPへ</a>
 	</div>
 	
 </body>

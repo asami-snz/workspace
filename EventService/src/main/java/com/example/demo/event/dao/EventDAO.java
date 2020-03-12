@@ -119,5 +119,20 @@ public class EventDAO {
 		return member_name;
 	}
 	
+	// イベント参加者テーブルにメンバーデータを1件追加する
+	// Eventテーブルにデータを一件Insert
+	public int insertOneMember(Member member) throws DataAccessException {
+		
+		//1件登録
+		int rowNumber = jdbc.update("INSERT INTO member_tbl("
+				+ " member_event_id,"
+				+ " member_name)"
+				+ " VALUES(?,?)"
+				, member.getMemberEventID()
+				, member.getMemberName());		
+		return rowNumber;
+	}
+	
+	
 }
 
