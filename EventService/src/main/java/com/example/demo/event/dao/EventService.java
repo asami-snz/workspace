@@ -81,12 +81,26 @@ public class EventService {
 		return eDao.selectMembers(eventID);
 	}
 	
-	//1件更新メソッド
+	// 参加者1件更新メソッド
 	public boolean insertOneMember(Member member)
 	{
 		boolean result = false;
 		//1件更新
 		int rowNumber = eDao.insertOneMember(member);
+		if( rowNumber > 0 ) 
+		{
+			//取得成功
+			result = true;
+		}
+		return result;
+	}
+	
+	//　参加者1件削除メソッド
+	public boolean deleteOneMember(Member member)
+	{
+		boolean result = false;
+		//1件更新
+		int rowNumber = eDao.deleteOneMember(member);
 		if( rowNumber > 0 ) 
 		{
 			//取得成功

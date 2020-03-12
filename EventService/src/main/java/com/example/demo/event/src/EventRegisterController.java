@@ -52,20 +52,14 @@ public class EventRegisterController {
 		
 		// insert処理呼び出し
 		boolean result = eventService.insert(event);
-		String strResult = "";
-		
 		if(result == true) {
-			strResult = "イベント作成に成功しました";
-			System.out.println("Insert成功");
+			model.addAttribute("contents", "eventRegister::regist_comp_contents");
 		}
 		else {
-			strResult = "イベント作成に失敗しました";
-			System.out.println("insert失敗");
+			model.addAttribute("contents", "eventRegister::regist_failure_contents");
 		}
 		
 		// 登録完了画面に遷移
-		model.addAttribute("strResult", strResult);
-		model.addAttribute("contents", "eventRegister::regist_comp_contents");
 		return "/eventTopLayout";
 	}
 

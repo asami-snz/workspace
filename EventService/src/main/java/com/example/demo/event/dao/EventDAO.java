@@ -133,6 +133,16 @@ public class EventDAO {
 		return rowNumber;
 	}
 	
-	
+	// メンバーテーブルの情報を1件削除
+	public int deleteOneMember(Member member) throws DataAccessException {
+		
+		int rowNumber = jdbc.update("DELETE FROM member_tbl"
+				+ " WHERE member_event_id=?"
+				+ " AND member_name=?"
+				, member.getMemberEventID()
+				, member.getMemberName());
+		return rowNumber;
+	}
+
 }
 

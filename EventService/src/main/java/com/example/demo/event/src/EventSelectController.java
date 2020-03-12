@@ -59,10 +59,9 @@ public class EventSelectController {
 		Event event = eventService.selectOne(eventID);
 		
 		// 指定したイベントに対応した参加者の取得
-		int i = 0;
 		String name = "";
 		List<String> members = eventService.selectMembers(eventID);
-		for (i = 0; i < members.size(); i++ ) {
+		for (int i = 0; i < members.size(); i++ ) {
 			name += members.get(i);
 			name += "、";
 		}
@@ -77,12 +76,11 @@ public class EventSelectController {
 	// GetRequestで参加表明画面に遷移
 	@GetMapping("/eventJoin")
 	public String getEventJoin(@ModelAttribute MemberForm memberForm, Model model) {
-		System.out.println("----");
 		model.addAttribute("contents", "eventSelect::select_join_contents");
 		return "/eventTopLayout";
 	}
 	
-	// PostRequestで参加表明画面に遷移
+	// PostRequestで参加処理に遷移
 	@PostMapping("/eventJoin")
 	public String postEventJoin(@ModelAttribute @Validated MemberForm memberForm, 
 			BindingResult bindingResult, Model model) {
@@ -98,20 +96,45 @@ public class EventSelectController {
 		member.setMemberEventID(shareID);
 		member.setMemberName(memberForm.getMemberName());
 		
-		// SQLで参加者テーブルにデータ追加
+		// 参加者テーブルにデータ追加
 		boolean result = eventService.insertOneMember(member);
-		
-		String strResult = "";
 		if(result == true) {
-			strResult = "参加者登録に成功しました";
+			model.addAttribute("contents", "eventSelect::select_join_comp_contents");
 		}
 		else {
-			strResult = "参加者登録に失敗しました";
+			model.addAttribute("contents", "eventSelect::select_join_failure_contents");
 		}
 		
 		// イベント参加完了画面に遷移
-		model.addAttribute("strResult", strResult);
-		model.addAttribute("contents", "eventSelect::select_join_comp_contents");
+		return "/eventTopLayout";
+	}
+	
+	// GetRequestでイベント参加削除画面に遷移
+	@GetMapping("/eventCancel")
+	public String getEventCancel(@ModelAttribute MemberForm memberForm, Model model) {
+		model.addAttribute("eventID", shareID);
+		model.addAttribute("contents", "eventSelect::select_cancel_contents");
+		return "/eventTopLayout";
+	}
+	
+	// GetRequestでイベント参加削除処理
+	@PostMapping("/eventCancel")
+	public String postEventCancel(@ModelAttribute @Validated MemberForm memberForm,
+			BindingResult bindingResult, Model model) {
+		// 問い合わせ用クラス作成
+		Member member = new Member();
+		
+		member.setMemberEventID(shareID);
+		member.setMemberName(memberForm.getMemberName());
+		
+		// 参加メンバーのデータを削除
+		boolean result = eventService.deleteOneMember(member);
+		if(result == true) {
+			model.addAttribute("contents", "eventSelect::select_delete_comp_contents");
+		}
+		else {
+			model.addAttribute("contents", "eventSelect::select_delete_failure_contents");
+		}
 		return "/eventTopLayout";
 	}
 	
