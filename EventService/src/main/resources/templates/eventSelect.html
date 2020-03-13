@@ -41,8 +41,11 @@
 
 	<!-- イベント詳細画面 -->
 	<div th:fragment="select_detail_contents">
-		<br>
-		<br>
+		<div class="page-header">
+			<br>
+			<font size=4>イベント詳細</font>
+			<br>
+		</div>
 		<table class="table table-bordered table-hover table-bordered">
 		<tr>
 			<th class="info col-sm-3">イベント名</th>
@@ -56,33 +59,123 @@
 			<th class="info col-sm-3">内容詳細</th>
 			<td th:text="${event.eventDetail}"></td>
 		</tr>
+		<!-- 本当は「現在の参加者」をrowspanで結合してth:each表示したい -->
 		<tr>
 			<th class="info col-sm-3">現在の参加者</th>
-			<td>(まだできてないところ)</td>
+			<td th:text="${members}"></td>
 		</tr>
 		</table>
-
-		<!-- 参加ボタン -->
-		<button class="btn btn-success btn-lg pull-right"
-				    type="submit" name="join">
-		このイベントに参加する
-		</button>
-		<br>
-		<br>
+		<div align="right">
+			<!-- 参加ボタン -->
+			<a class="btn btn-info" th:href="@{'/eventJoin'}">このイベントに参加する</a>
+			<!-- 参加キャンセル -->
+			<a class="btn btn-danger" th:href="@{'/eventCancel'}">このイベントをキャンセルする</a>
+		</div>
+		
 		<a th:href="@{'/eventSelect'}">イベント一覧に戻る</a>
 	</div>
 
+	<!-- イベント参加受付画面 -->
+	<div th:fragment="select_join_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベント参加者の名前を入力してください</font>
+		</div>
+		<form method="post" action="/eventJoin" th:object="${memberForm}">
+			<div class="form-group col-sm-8"
+				th:classappend="${#fields.hasErrors('memberName')}?'has-error'">
+				<input type="text" class="form-control"
+					placeholder="(30文字以内)" th:field="*{memberName}" />
+				
+				<!-- 入力エラー時のcss -->
+				<span class="text-danger"
+					th:if="${#fields.hasErrors('memberName')}"
+					th:errors="*{memberName}">
+				</span>
+				<br>
+				<!-- イベント登録ボタン -->
+				<button class="btn btn-primary pull-right" type="submit">
+					参加
+				</button>
+				<!-- 戻るボタン -->
+				<a th:href="@{'/eventTop'}">TOPへ</a>
+			</div>
+		</form>
+	</div>
 
 	<!-- イベント参加完了画面 -->
 	<div th:fragment="select_join_comp_contents">
 		<div class="page-header">
 			<br>
 			<font size=4>イベント参加完了しました</font>
-			<br>
-			
-			<!-- 戻るボタン -->
-			<a th:href="@{'/eventTop'}">TOPへ</a>
+			<br>			
 		</div>
+		<!-- 戻るボタン -->
+		<a th:href="@{'/eventSelect'}">イベント一覧に戻る</a>
+	</div>
+	
+	<!-- イベント参加失敗画面 -->
+	<div th:fragment="select_join_failure_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベント参加登録に失敗しました</font>
+			<br>			
+		</div>
+		<!-- 戻るボタン -->
+		<a th:href="@{'/eventSelect'}">イベント一覧に戻る</a>
+	</div>
+	
+	
+	<!-- イベント参加キャンセル画面 -->
+	<div th:fragment="select_cancel_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>キャンセルしたい人の名前を入力してください</font>
+		</div>
+		
+		<!-- メンバー削除処理 -->
+		<form method="post" action="/eventCancel" th:object="${memberForm}">
+			<div class="form-group col-sm-8"
+				th:classappend="${#fields.hasErrors('memberName')}?'has-error'">
+				<input type="text" class="form-control"
+					placeholder="(30文字以内)" th:field="*{memberName}" />
+				
+				<!-- 入力エラー時のcss -->
+				<span class="text-danger"
+					th:if="${#fields.hasErrors('memberName')}"
+					th:errors="*{memberName}">
+				</span>
+				<br>
+				<!-- イベント登録ボタン -->
+				<button class="btn btn-primary pull-right" type="submit">
+					削除
+				</button>
+				<!-- 戻るボタン -->
+				<a th:href="@{'/eventSelect/'+${eventID}}">イベント詳細に戻る</a>
+			</div>
+		</form>
+	</div>
+	
+	<!-- イベント参加削除完了画面 -->
+	<div th:fragment="select_delete_comp_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベント参加削除完了しました</font>
+			<br>			
+		</div>
+		<!-- 戻るボタン -->
+		<a th:href="@{'/eventSelect'}">イベント一覧に戻る</a>
+	</div>
+	
+	<!-- イベント参加削除失敗画面 -->
+	<div th:fragment="select_delete_failure_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベント参加削除に失敗しました</font>
+			<br>			
+		</div>
+		<!-- 戻るボタン -->
+		<a th:href="@{'/eventSelect'}">イベント一覧に戻る</a>
 	</div>
 	
 </body>

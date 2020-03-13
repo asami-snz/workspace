@@ -1,9 +1,11 @@
-package com.example.demo.com.example.demo.event.dao;
+package com.example.demo.event.dao;
 
 import java.util.*;
 import org.springframework.stereotype.Service;
+
+import com.example.demo.event.src.*;
+
 import org.springframework.beans.factory.annotation.*;
-import com.example.demo.com.example.demo.event.src.*;
 
 /* EventDAOのラッパークラス（service） */
 
@@ -69,6 +71,39 @@ public class EventService {
 		if(rowNumber > 0) 
 		{
 			//delete成功
+			result = true;
+		}
+		return result;
+	}
+	
+	// 参加者取得メソッド
+	public List<EventDetail> selectEventDetails(int eventID){
+		return eDao.selectEventDetail(eventID);
+	}
+	
+	// 参加者1件更新メソッド
+	public boolean insertOneMember(Member member)
+	{
+		boolean result = false;
+		//1件更新
+		int rowNumber = eDao.insertOneMember(member);
+		if( rowNumber > 0 ) 
+		{
+			//取得成功
+			result = true;
+		}
+		return result;
+	}
+	
+	//　参加者1件削除メソッド
+	public boolean deleteOneMember(Member member)
+	{
+		boolean result = false;
+		//1件更新
+		int rowNumber = eDao.deleteOneMember(member);
+		if( rowNumber > 0 ) 
+		{
+			//取得成功
 			result = true;
 		}
 		return result;

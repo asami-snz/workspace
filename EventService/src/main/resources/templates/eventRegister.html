@@ -4,29 +4,96 @@
 <head>
 <meta charset="UTF-8">
 
+<!-- Bootstrapの設定 -->
+<link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"
+      rel="stylesheet"></link>
+<script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </head>
+
 <body>
 	<div th:fragment="regist_contents">
 		<div class="page-header">
 			<br>
-			<font size=4>イベントを作成します</font>
-			<br>
-			
-			<!-- 戻るボタン -->
-			<a th:href="@{'/eventTop'}">TOPへ</a>
+			<font size=4>登録するイベントについて入力してください</font>
 		</div>
+		<form method="post" action="/eventRegister" th:object="${eventForm}">
+			<table class="table table-bordered table-hover">
+			<tr>
+				<th class="active">イベント名</th>
+				<td>
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('eventName')}?'has-error'">
+						<input type="text" class="form-control"
+							placeholder="(30文字以内)" th:field="*{eventName}" />
+						<!-- エラー用CSS -->
+						<span class="text-danger"
+							th:if="${#fields.hasErrors('eventName')}"
+							th:errors="*{eventName}">
+						eventName error
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th class="active">開催日</th>
+				<td>
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('eventDay')}?'has-error'">
+						<input type="text" class="form-control"
+							placeholder="yyyy/MM/dd" th:field="*{eventDay}" />
+						<!-- エラー用CSS -->
+						<span class="text-danger"
+							th:if="${#fields.hasErrors('eventDay')}"
+							th:errors="*{eventDay}">
+						eventDay error
+						</span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th class="active">イベント詳細</th>
+				<td>
+					<div class="form-group"
+						th:classappend="${#fields.hasErrors('eventDetail')}?'has-error'">
+						<input type="text" class="form-control" 
+							placeholder="(50文字以内)" th:field="*{eventDetail}" />
+						<!-- エラー用CSS -->
+						<span class="text-danger"
+							th:if="${#fields.hasErrors('eventDetail')}"
+							th:errors="*{eventDetail}">
+						eventDetail error
+						</span>
+					</div>
+				</td>
+			</tr>
+			</table>
+			
+			<!-- イベント登録ボタン -->
+			<button class="btn btn-primary" type="submit">
+				登録
+			</button>
+		</form>
 	</div>
 	
 	<div th:fragment="regist_comp_contents">
 		<div class="page-header">
 			<br>
-			<font size=4>イベントを作成完了しました</font>
+			<font size=4>イベント登録に成功しました</font>
 			<br>
-			
-			<!-- 戻るボタン -->
-			<a th:href="@{'/eventTop'}">TOPへ</a>
 		</div>
+		<!-- 戻るボタン -->
+		<a th:href="@{'/eventTop'}">TOPへ</a>
 	</div>
 	
+	<div th:fragment="regist_failure_contents">
+		<div class="page-header">
+			<br>
+			<font size=4>イベント登録に失敗しました</font>
+			<br>
+		</div>
+		<!-- 戻るボタン -->
+		<a th:href="@{'/eventTop'}">TOPへ</a>
+	</div>
 </body>
 </html>
