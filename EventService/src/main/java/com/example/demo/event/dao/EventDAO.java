@@ -100,16 +100,15 @@ public class EventDAO {
 	public List<EventDetail> selectEventDetail(int eventID) throws DataAccessException {
 		
 		// 結果返却用の変数
-		List<EventDetail> eventDetailList = new ArrayList<>();
+		List<EventDetail> eventDatailList = new ArrayList<>();
 		
 		// イベントテーブル、参加者テーブルを結合した結果を取得
 		List<Map<String,Object>> getList = jdbc.queryForList(""
 				+ "SELECT * FROM"
-				+ " ( SELECT * FROM"
 				+ " event_tbl AS e_tbl"
 				+ " LEFT OUTER JOIN member_tbl AS m_tbl"
-				+ " ON e_tbl.event_id = m_tbl.member_event_id) AS detail_tbl"
-				+ " WHERE detail_tbl.event_id=?"
+				+ " ON e_tbl.event_id = m_tbl.member_event_id"
+				+ " WHERE e_tbl.event_id=?"
 				, eventID);
 		
 		//取得したデータを返却用クラスに格納
@@ -124,9 +123,10 @@ public class EventDAO {
 			detail.setEventMemberName((String)map.get("member_name"));
 			
 			//返却用リストに格納
-			eventDetailList.add(detail);
+			eventDatailList.add(detail);
 		}
-		return eventDetailList;
+				
+		return eventDatailList;
 	}
 	
 	// イベント参加者テーブルにメンバーデータを1件追加する
