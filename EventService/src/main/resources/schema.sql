@@ -13,4 +13,5 @@ CREATE TABLE IF NOT EXISTS member_tbl (
 	member_event_id INTEGER NOT NULL,
 	member_name VARCHAR(20) NOT NULL,
 	FOREIGN KEY(member_event_id) REFERENCES event_tbl(event_id)
+	ON DELETE SET NULL
 );

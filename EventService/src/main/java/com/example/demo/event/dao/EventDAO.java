@@ -87,7 +87,6 @@ public class EventDAO {
 				, event.getEventName()
 				, event.getEventDay()
 				, event.getEventDetail());
-		
 		return rowNumber;
 	}
 	
@@ -97,26 +96,37 @@ public class EventDAO {
 		return rowNumber;
 	}
 	
-	// 指定したイベントIDに紐づいている参加者を取得
-	public List<String> selectMembers(int eventID) throws DataAccessException {
+	// 指定したイベントIDに紐づいているイベント情報＋参加者を取得
+	public List<EventDetail> selectEventDetail(int eventID) throws DataAccessException {
+		
 		// 結果返却用の変数
-		List<String> member_name = new ArrayList<>();
+		List<EventDetail> eventDetailList = new ArrayList<>();
 		
 		// イベントテーブル、参加者テーブルを結合した結果を取得
 		List<Map<String,Object>> getList = jdbc.queryForList(""
-				+ "SELECT m.member_name FROM member_tbl AS m"
-				+ " INNER JOIN event_tbl AS e"
-				+ " ON m.member_event_id=e.event_id"
-				+ " AND e.event_id=?"
-				, eventID );
+				+ "SELECT * FROM"
+				+ " ( SELECT * FROM"
+				+ " event_tbl AS e_tbl"
+				+ " LEFT OUTER JOIN member_tbl AS m_tbl"
+				+ " ON e_tbl.event_id = m_tbl.member_event_id) AS detail_tbl"
+				+ " WHERE detail_tbl.event_id=?"
+				, eventID);
 		
-		//取得したデータを返却用Listに格納
+		//取得したデータを返却用クラスに格納
 		for(Map<String, Object> map:getList) {
-			String str = (String)map.get("member_name");
-			member_name.add(str);
+			//Eventインスタンスの生成
+			EventDetail detail = new EventDetail();
+			
+			//取得したデータをインスタンスにセットしていく
+			detail.setEventName((String)map.get("event_name"));
+			detail.setEventDay((Date)map.get("event_day"));
+			detail.setEventDetail((String)map.get("event_detail"));
+			detail.setEventMemberName((String)map.get("member_name"));
+			
+			//返却用リストに格納
+			eventDetailList.add(detail);
 		}
-		
-		return member_name;
+		return eventDetailList;
 	}
 	
 	// イベント参加者テーブルにメンバーデータを1件追加する

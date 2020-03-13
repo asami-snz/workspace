@@ -55,20 +55,27 @@ public class EventSelectController {
 		//　イベントIDを共有変数に格納
 		shareID = eventID;
 		
-		// 指定したイベント情報を取得
-		Event event = eventService.selectOne(eventID);
+		// 指定したイベント情報と参加者データを取得する
+		List<EventDetail> detailList = eventService.selectEventDetails(eventID);
 		
-		// 指定したイベントに対応した参加者の取得
-		String name = "";
-		List<String> members = eventService.selectMembers(eventID);
-		for (int i = 0; i < members.size(); i++ ) {
-			name += members.get(i);
-			name += "、";
+		//　取得したデータをイベント部とメンバー部に分割（html側のループの都合上）
+		Event event = new Event();
+		event.setEventID(shareID);
+		event.setEventName(detailList.get(0).getEventName());
+		event.setEventDay(detailList.get(0).getEventDay());
+		event.setEventDetail(detailList.get(0).getEventDetail());
+		
+		String members = "";
+		for (int i = 0; i < detailList.size() ; i++ ) {
+			if( detailList.get(i).getEventMemberName() == null ) {
+				continue;
+			}
+			members += (detailList.get(i).getEventMemberName() + "、");
 		}
 		
 		// モデルにデータを登録
 		model.addAttribute("event", event);
-		model.addAttribute("members", name);
+		model.addAttribute("members", members);
 		model.addAttribute("contents", "eventSelect::select_detail_contents");
 		return "/eventTopLayout";
 	}
